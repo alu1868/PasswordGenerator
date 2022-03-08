@@ -11,7 +11,7 @@ const special = ['!','@','#','$','%','^','&','*','(',')','_','-',',','=','+','`'
 
 
 // Function to decide character types
-function parameters() {
+function generatePassword() {
 
   var passwordParameters = [''];
 
@@ -50,36 +50,23 @@ function parameters() {
       passwordParameters = passwordParameters.concat(special);
     }
 
-    // turn these into global variables
-    lengthOfPassword = lengthInput;
-    key = passwordParameters;
+    // test to make sure array works
+    console.log('this is the pool:' + passwordParameters);
+    console.log('this is the lengthInput:' + lengthInput);
+    var arrayPassword = [""];
+    // run until we meet the lengthInput
+    for (var i = 0; i < lengthInput; i++) {
+      // generates a random number from 0 to the length of the string of passwordParameters
+      var random = Math.floor(Math.random() * passwordParameters.length);
+      // attaches array to blank password, until for loop is done
+      arrayPassword = arrayPassword.concat(passwordParameters[random]);
+      console.log(arrayPassword)
+    }
     
+    var finalPassword = arrayPassword.join("");
+    console.log(finalPassword);
+    return finalPassword;
  };
-
-
-
-// function that is called upon when button pressed
-function generatePassword() {
-
-  var lengthInput = lengthOfPassword;
-  var passwordParameters = key;
-  // test to make sure array works
-  console.log('this is the pool:' + passwordParameters);
-  console.log('this is the lengthInput:' + lengthInput);
-  var arrayPassword = [""];
-  // run until we meet the lengthInput
-  for (var i = 0; i < lengthInput; i++) {
-    // generates a random number from 0 to the length of the string of passwordParameters
-    var random = Math.floor(Math.random() * passwordParameters.length);
-    // attaches array to blank password, until for loop is done
-    arrayPassword = arrayPassword.concat(passwordParameters[random]);
-    console.log(arrayPassword)
-  }
-  var finalPassword = arrayPassword.join("");
-  console.log(finalPassword)
-  return finalPassword;
-}
-
 
  
 // Get references to the #generate element
@@ -96,4 +83,3 @@ function writePassword() {
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
-parameters();
