@@ -10,27 +10,17 @@ const number = ['1','2','3','4','5','6','7','8','9','0'];
 const special = ['!','@','#','$','%','^','&','*','(',')','_','-',',','=','+','`','~','<','>','.','/','?',';',':'];
 
 
-
-// How long do you want your password to be?
-function parameterBegin () {
-  var lengthInput = window.prompt('How long would you like your password to be?')
-  // if false, return back to input
-  if (lengthInput < 8 || lengthInput > 128 || isNaN(lengthInput)){
-    alert('must enter a number between 8 and 128');
-    return parameterBegin();
-  }
-  // if correct proceed to character selection inputs
-  else {
-    parameters();
-  }
-}
-
 // Function to decide character types
 function parameters() {
 
-  console.log('button works atleast')
-  var passwordParameters = [""];
+  var passwordParameters = [''];
 
+  var lengthInput = window.prompt('How long would you like your password to be?', 8)
+  // if false, return back to input
+  if (lengthInput < 8 || lengthInput > 128 || isNaN(lengthInput)){
+    alert('must enter a number between 8 and 128');
+    return generatePassword();
+  }
 
   // Do you want lower case letters?
   var lowerInput = confirm('Would you like lower case letters in your password?');
@@ -59,9 +49,39 @@ function parameters() {
     if (specialInput) {
       passwordParameters = passwordParameters.concat(special);
     }
-  
+
+    // turn these into global variables
+    lengthOfPassword = lengthInput;
+    key = passwordParameters;
+    
  };
 
+
+
+// function that is called upon when button pressed
+function generatePassword() {
+
+  var lengthInput = lengthOfPassword;
+  var passwordParameters = key;
+  // test to make sure array works
+  console.log('this is the pool:' + passwordParameters);
+  console.log('this is the lengthInput:' + lengthInput);
+  var arrayPassword = [""];
+  // run until we meet the lengthInput
+  for (var i = 0; i < lengthInput; i++) {
+    // generates a random number from 0 to the length of the string of passwordParameters
+    var random = Math.floor(Math.random() * passwordParameters.length);
+    // attaches array to blank password, until for loop is done
+    arrayPassword = arrayPassword.concat(passwordParameters[random]);
+    console.log(arrayPassword)
+  }
+  var finalPassword = arrayPassword.join("");
+  console.log(finalPassword)
+  return finalPassword;
+}
+
+
+ 
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
@@ -76,4 +96,4 @@ function writePassword() {
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
-parameterBegin();
+parameters();
